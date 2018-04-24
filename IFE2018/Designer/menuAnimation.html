@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>MenuAnimation</title>
+    <style type="text/css">
+      #menu{
+        width:100px;
+        height:50px;
+        text-align:center;
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+      }
+
+      #menu span:nth-child(1){
+        height:45px;
+        width:100%;
+        line-height:45px;
+      }
+
+      #menu span:nth-child(2){
+        background-color:#0099cc;
+        height:5px;
+        width:0%;
+      }
+
+      #switch{
+        background-color:#fff;
+        border:1px solid #ccc;
+        margin-top:20px;
+        height:30px;
+        line-height:30px;
+        border-radius:5px;
+        cursor: pointer;
+        width:100px;
+      }
+
+      @keyframes trans1 {
+        from {width:0%;}
+        to {width:100%;}
+      }
+
+      @keyframes trans2 {
+        from {width:100%;}
+        to {width:0%;}
+      }
+
+      .status1 {
+        animation: trans1 .5s forwards;
+      }
+
+      .status2 {
+        animation: trans2 .5s forwards;
+      }
+    </style>
+</head>
+<body>
+  <div id="menu"><span>前端学院</span><span></span></div>
+  <br>
+  <button type="button" id="switch">切换样式</button>
+  <script type="text/javascript">
+    var btn = document.getElementById('switch');
+    var menu = document.getElementById('menu');
+    btn.addEventListener('click',function(){
+      if(menu.children[1].className == 'status1'){
+        menu.children[1].className = 'status2';
+        menu.style.color = '#000';
+      }else if(menu.children[1].className == '' || menu.children[1].className == 'status2'){
+        menu.children[1].className = 'status1';
+        menu.style.color = '#0099cc';
+      }
+    })
+  </script>
+</body>
+</html>
