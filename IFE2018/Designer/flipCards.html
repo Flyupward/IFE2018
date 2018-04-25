@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <style type="text/css">
+    .container {
+      width:250px;
+      height:350px;
+      margin:0 auto;
+      margin-top:50px;
+      position:relative;
+      transform-style:preserve-3d;
+    }
+    .container img {
+      position:absolute;
+      top:0;
+      left:0;
+      transition:all 1s;
+      backface-visibility:hidden;
+    }
+    .front {
+      transform:perspective(1000px) translateZ(20px) rotateY(0deg);
+    }
+    .back {
+      transform: perspective(1000px) translateZ(20px) rotateY(180deg);
+    }
+    .container:hover .front {
+      transform:rotateY(-180deg);
+    }
+    .container:hover .back {
+      transform:rotateY(360deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="front" src="任务四设计稿/正面.jpg" alt="">
+    <img class="back" src="任务四设计稿/反面.jpg" alt="">
+  </div>
+</body>
+</html>
