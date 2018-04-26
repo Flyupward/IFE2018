@@ -21,15 +21,20 @@
     }
     .front {
       transform:perspective(1000px) translateZ(20px) rotateY(0deg);
+      z-index:1;
+    }
+
+    .container:hover .front {
+      transform: rotateY(-180deg);
+      z-index:-1;
     }
     .back {
       transform: perspective(1000px) translateZ(20px) rotateY(180deg);
-    }
-    .container:hover .front {
-      transform:rotateY(-180deg);
+      z-index:-1;
     }
     .container:hover .back {
-      transform:rotateY(360deg);
+      transform: rotateY(360deg);
+      z-index:1;
     }
   </style>
 </head>
