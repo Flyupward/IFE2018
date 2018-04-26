@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Slider</title>
+    <style type="text/css">
+      *{padding:0;margin:0;}
+      .container {
+        width:384px;
+        height:570px;
+        margin:0 auto;
+        position:relative;
+        overflow:hidden;
+      }
+      .container img {
+        width:100%;
+        height:100%;
+        position:absolute;
+        top:0;
+        left:0;
+      }
+
+      .switch {
+        width:384px;
+        height:100px;
+        display:flex;
+        flex-direction:row;
+        align-items: center;
+        margin:0 auto;
+        background-color:rgba(0,153,204, 0.5);
+      }
+
+      .switch li {
+        list-style:none;
+        display:flex;
+        justify-content:center;
+        flex:1;
+        transition:all 1s;
+        filter:brightness(0.6);
+      }
+
+      .switch li:hover {
+        /* opacity:0.8; */
+        transform: scale(1.05, 1.05);
+        filter:brightness(1);
+      }
+
+      .switch li > img {
+        width:65px;
+        height:95px;
+        cursor: pointer;
+      }
+
+      @keyframes hnu_1 {
+        from {left:-500px;}
+        to {left:0px;}
+      }
+      @keyframes hnu_2 {
+        from {top:100%;}
+        to {top:0%;}
+      }
+      @keyframes hnu_3 {
+        from {transform:scale(0.1);}
+        to {transform:scale(1);}
+      }
+      @keyframes hnu_4 {
+        from {transform:scale(2);}
+        to {transform:scale(1);}
+      }
+      @keyframes hnu_5 {
+        from {transform:scale(0.1) rotate(-360deg);}
+        to {transform:scale(1) rotate(0deg);}
+      }
+
+      img.hnu_1 {
+        left:-500px;
+        animation:hnu_1 0.5s ease-out forwards;
+      }
+      img.hnu_2 {
+        top:100%;
+        animation:hnu_2 0.5s ease-out forwards;
+      }
+      img.hnu_3 {
+        transform:scale(0.1);
+        animation:hnu_3 1s ease-in forwards;
+      }
+      img.hnu_4 {
+        transform:scale(2);
+        animation:hnu_4 1s ease-out forwards;
+      }
+      img.hnu_5 {
+        transform:scale(0.1) rotate(-360deg);
+        animation:hnu_5 0.7s ease-in-out forwards;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <img style="z-index: 9;" src="images/hnu1.jpg" alt="">
+    <img src="images/hnu2.jpg" alt="">
+    <img src="images/hnu3.jpg" alt="">
+    <img src="images/hnu4.jpg" alt="">
+    <img src="images/hnu5.jpg" alt="">
+  </div>
+  <ul class="switch">
+    <li><img src="images/hnu1.jpg" alt=""></li>
+    <li><img src="images/hnu2.jpg" alt=""></li>
+    <li><img src="images/hnu3.jpg" alt=""></li>
+    <li><img src="images/hnu4.jpg" alt=""></li>
+    <li><img src="images/hnu5.jpg" alt=""></li>
+  </ul>
+  <script type="text/javascript">
+    var showimg = document.querySelector('.container').children;
+    var switchs = document.querySelector('.switch').children;
+    var cache = [];
+    for(var i = 0,len = switchs.length;i < len;i++) {
+      (function(index){switchs[i].addEventListener("click", function(){
+        for(var j = 1;j < len;j++){
+          showimg[j].className = '';
+          showimg[j].style.zIndex = 1;
+        };
+        cache.push(index);
+        var prev = cache[0];
+        showimg[prev].style.zIndex = 9;
+        if(cache.length >= 2){
+          cache.shift();
+          var cur = cache[0];
+          showimg[cur].style.zIndex = 99;
+        }
+        showimg[index].className = "hnu_" + (index + 1) ;
+      });})(i);
+    }
+  </script>
+</body>
+</html>
