@@ -1,0 +1,48 @@
+*{margin:0;padding:0}
+.container {
+    width:800px;
+    height:550px;
+    margin:0 auto;
+}
+.resume-title {
+    float: left;
+    height:90%;
+    width:20%;
+    padding-top: 10%;
+    text-align: center;
+    color:#fff;
+    font-family: '微软雅黑';
+    background-color: #09e;
+}
+
+.main {
+    width:75%;
+    float: left;
+    padding-left: 5%;
+}
+
+.main h3 {
+    margin: 10px 0px;
+}
+
+.main p {
+    margin: 5px 0px;
+}
+.wrap p {
+    margin-right: 30px;
+}
+
+.row-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.column-wrap > p > span {
+    display:block;
+}
+
+.key {
+    font-weight: 800;
+    font-family: '微软雅黑';
+    margin-right: 10px;
+}

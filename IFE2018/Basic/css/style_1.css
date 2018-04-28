@@ -1,0 +1,27 @@
+*{magin:0;padding:0;}
+.container {
+    width:600px;
+    height:auto;
+    margin:0 auto;
+    border:solid 1px #ccc;
+    padding-left: 10px;
+}
+
+.wrap p {
+    margin-right: 30px;
+}
+
+.row-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.column-wrap > p > span {
+    display:block;
+}
+
+.key {
+    font-weight: 800;
+    font-family: '微软雅黑';
+    margin-right: 10px;
+}

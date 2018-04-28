@@ -1,0 +1,102 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume</title>
+  <style type="text/css">
+    .container {
+      width:500px;
+      height:auto;
+      padding:50px;
+      margin:0 auto;
+      margin-top:50px;
+      border: 2px solid #ccc;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .container h1 {
+      display:block;
+      margin:0 auto; /* 父容器为flex布局时有效 */
+    }
+
+    .content {
+      width:100%;
+      height:auto;
+      margin-top:50px;
+      position:relative;
+    }
+
+    .content p > span:nth-child(1) {
+      font-family:'黑体';
+      font-weight:600;
+    }
+
+    .content p > span:nth-child(2) {
+      margin-left:20px;
+      color:#0099cc;
+      font-size:15px;
+    }
+
+    .email:link {
+      color:#09e;
+    }
+
+    .email:hover {
+      text-decoration: none;
+    }
+
+    .email:active {
+      color:#c00;
+    }
+
+    .email:visited {
+      color:yellow;
+    }
+
+    .img{
+      width:90px;
+      height:150px;
+      background-color:#ccc;
+      background-image: url(portrait.png);
+      background-repeat:no-repeat;
+      background-position:25px 30px;
+      background-size:50%;
+      position:absolute;
+      right:0px;
+      top:0px;
+      text-align:center;
+      line-height:150px;
+      color:#fff;
+    }
+
+    .exp {
+      border:1px ;
+    }
+
+    .name:hover + span:nth-child(2) {
+      font-weight:800;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MY RESUME</h1>
+    <div class="content">
+      <p><span class="name">姓名:</span><span>Flyupward</span></p>
+      <p><span>手机:</span><span>188900289**</span></p>
+      <p><span>邮箱:</span><span><a class="email" href="javascript:;" title="">flyupward@***.edu.cn</a></span></p>
+      <p><span>学历:</span><span>本科</span></p>
+      <div class="img">
+        请上传头像
+      </div>
+      <hr style="color:#0099cc;" />
+      <div class="exp">
+        <h3>项目经验</h3>
+        <p><span>项目名称:</span><span>项目A</span></p>
+        <p>项目描述:</p>
+        <textarea name="">在项目A中负责了******</textarea>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
