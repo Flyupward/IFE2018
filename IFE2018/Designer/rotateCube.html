@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>rotateCube</title>
+  <style type="text/css">
+    .stage {
+      perspective:1200px;
+    }
+    .container {
+      width:200px;
+      height:200px;
+      position:relative;
+      transform-style:preserve-3d;
+      margin:0 auto;
+      margin-top:50px;
+    }
+    .container > div {
+      width:200px;
+      height:200px;
+      background-color:#0099cc;
+      opacity:0.3;
+      position:absolute;
+      top:0;
+      left:0;
+      transform-origin:center;
+      border:solid 1px #09e;
+    }
+
+    .container div:nth-of-type(1){
+      transform: rotateX(90deg) translateZ(100px);
+    }
+    .container div:nth-of-type(2){
+      transform: rotateX(90deg) translateZ(-100px);
+    }
+    .container div:nth-of-type(3){
+      transform: rotateY(90deg) translateZ(100px);
+    }
+    .container div:nth-of-type(4){
+      transform: rotateY(90deg) translateZ(-100px);
+    }
+    .container div:nth-of-type(5){
+      transform: translateZ(100px);
+    }
+    .container div:nth-of-type(6){
+      transform: translateZ(-100px);
+    }
+
+    @keyframes rot {
+      to {transform: rotateY(1turn);}
+    }
+
+    .container:hover {
+      animation:rot 5s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="container">
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
