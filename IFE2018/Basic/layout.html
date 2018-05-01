@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Layout</title>
+    <link id="layout" rel="stylesheet" type="text/css" href="css/flexbox.css">
+    <style type="text/css">
+        button {
+            width:100px;
+            height:30px;
+            background-color:#09e;
+            border:none;
+            border-radius:5px;
+            cursor: pointer;
+            margin-left:50px;
+            margin-top:10px;
+            color:#fff;
+        }
+        button:hover {
+            opacity:0.8;
+        }
+    </style>
+</head>
+<body>
+    <span id="cur">点击切换不同实现方式</span>
+    <button id="float">float</button>
+    <button id="position">position</button>
+    <button id="flexbox">flexbox</button>
+    <!-- 实现一个两栏布局，左侧占30%宽度，右侧占70%宽度 -->
+    <div class="container container-1">
+        <div class="left left-1">
+            30%
+        </div>
+        <div class="right right-1">
+            70%
+        </div>
+    </div>
+    <!-- 实现一个两栏布局，左侧固定宽度，右侧根据浏览器宽度进行自适应变化 -->
+    <div class="container container-2">
+        <div class="left left-2">
+            200px
+        </div>
+        <div class="right right-2">
+
+        </div>
+    </div>
+    <!-- 实现一个两栏布局，右侧固定宽度，左侧根据浏览器宽度进行自适应变化 -->
+    <div class="container container-3">
+        <div class="left left-3">
+
+        </div>
+        <div class="right right-3">
+            200px
+        </div>
+    </div>
+    <!-- 实现一个三栏布局，左侧固定宽度，右侧固定宽度，中间部分宽度随浏览器宽度变化而自适应变化 -->
+    <div class="container container-4">
+        <div class="left left-4">
+            200px
+        </div>
+        <div class="middle middle-4">
+
+        </div>
+        <div class="right right-4">
+            200px
+        </div>
+    </div>
+    <!-- 实现一个三栏布局，左侧固定宽度，中间固定宽度，右侧根据浏览器宽度变化而自适应变化 -->
+    <div class="container container-5">
+        <div class="left left-5">
+            200px
+        </div>
+        <div class="middle middle-5">
+            200px
+        </div>
+        <div class="right right-5">
+
+        </div>
+    </div>
+    <script>
+        var layout = document.getElementById('layout');
+        var cur = document.getElementById('cur');
+        var btn = document.getElementsByTagName('button');
+        for(var i = 0,len = btn.length;i < len; i++){
+            btn[i].onclick = function(){
+                layout.href = "css/" + this.id +".css";
+                cur.innerHTML = this.id;
+            }
+        }
+    </script>
+</body>
+</html>
