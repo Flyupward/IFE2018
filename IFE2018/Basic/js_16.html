@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>RESUME</title>
+    <link rel="stylesheet" type="text/css" href="css/style_3.css">
+    <style type="text/css">
+        #hire {
+            width:100px;
+            height:30px;
+            background-color:#09e;
+            border-radius:10px;
+            cursor: pointer;
+            color:#fff;
+            font-size:15px;
+            border:none;
+            transform: translate(30px,30px);
+        }
+    </style>
+</head>
+<body>
+    <button id="hire">录用</button>
+    <div class="container">
+        <h2 class="resume-title">简历</h2>
+        <div class="main">
+            <div class="basic-info info">
+                <h3 class="section-title">基本信息</h3>
+                <div class="row-wrap wrap">
+                    <p><span class="key">姓名</span><span id="name">张三</span></p>
+                    <p><span class="key">性别</span><span>男</span></p>
+                    <p><span class="key">应聘职位</span><span>Web前端工程师</span></p>
+                </div>
+            </div>
+            <div class="contact-info info">
+                <h3 class="section-title">联系方式</h3>
+                <div class="row-wrap wrap">
+                    <p><span class="key">手机</span><span>12312341234</span></p>
+                    <p><span class="key">Email</span><span><a href="javascript:;" title="">joinefe@baidu.com</a></span></p>
+                    <p><span class="key">个人主页</span><span><a href="javascript:;" title="">Github</a></span></p>
+                </div>
+            </div>
+            <div class="cap-desc info">
+                <h3 class="section-title">能力描述</h3>
+                <div class="column-wrap wrap">
+                   <p><span class="key">技术能力</span><span>熟练掌握HTML,CSS,Javascript</span></p>
+                   <p><span class="key">综合能力</span><span>良好的沟通，主动积极，努力勤奋</span></p>
+                </div>
+            </div>
+            <div class="edu-exp info">
+                <h3 class="section-title">教育经历</h3>
+                <div class="column-wrap wrap">
+                   <p><span class="key">本科</span><span>百度前端技术学院小薇学院</span></p>
+                   <p><span class="key">研究生</span><span>百度前端技术学院大斌学院</span></p>
+                </div>
+            </div>
+            <div class="prg-exp info">
+                <h3 class="section-title">项目经历</h3>
+                <div class="column-wrap wrap">
+                    <p><span class="key">小度小度</span><span>作为前端工程师角色参与了ABC组件的开发</span></p>
+                    <p><span class="key">San Doc</span><span>作为文档工程师参与了San Doc编写</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var hire = document.getElementById('hire');
+    var name = document.getElementById('name').innerHTML;
+    hire.onclick = function(){
+        alert(name + "已被成功录用！");
+    }
+</script>
+</html>
