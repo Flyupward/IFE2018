@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+       .container {
+        width:480px;
+        height:480px;
+        background-image:url('images/erik.jpg');
+        margin:0 auto;
+       }
+    </style>
+</head>
+<body>
+    <div id="container" class="container" style="background-position: 0px 0px;">
+
+    </div>
+    <script>
+        var container = document.querySelector("#container"),
+            pos = 0,
+            flag = true,
+            start = true,
+            h = 17*480;
+        setInterval(function(){
+            pos = parseFloat(container.style.backgroundPositionY);
+            if((pos === -h + 480 || pos === 0) && !start){
+                flag = !flag;
+            };
+            start = false;
+            if(flag){
+                pos -= 480;
+            }else{
+                pos += 480;
+            }
+            container.style.backgroundPositionY = pos + 'px';
+        },100);
+    </script>
+</body>
+</html>
