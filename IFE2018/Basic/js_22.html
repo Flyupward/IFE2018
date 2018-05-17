@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <input type="" id="name2id" placeholder="根据输入name找到对应的id" name="">
+    <button type="" id="btn1">search id</button>
+    <input type="" id="id2name" placeholder="根据输入id找到对应的name" name="">
+    <button type="" id="btn2">search name</button>
+    <script>
+        var btn1 = document.querySelector("#btn1"),
+            btn2 = document.querySelector("#btn2");
+
+        var tree = {
+            "id": 0,
+            "name": "root",
+            "left": {
+                "id": 1,
+                "name": "Simon",
+                "left": {
+                    "id": 3,
+                    "name": "Carl",
+                    "left": {
+                        "id": 7,
+                        "name": "Lee",
+                        "left": {
+                            "id": 11,
+                            "name": "Fate"
+                        }
+                    },
+                    "right": {
+                        "id": 8,
+                        "name": "Annie",
+                        "left": {
+                            "id": 12,
+                            "name": "Saber"
+                        }
+                    }
+                },
+                "right": {
+                    "id": 4,
+                    "name": "Tony",
+                    "left": {
+                        "id": 9,
+                        "name": "Candy"
+                    }
+                }
+            },
+            "right": {
+                "id": 2,
+                "name": "right",
+                "left": {
+                    "id": 5,
+                    "name": "Carl",
+                },
+                "right": {
+                    "id": 6,
+                    "name": "Carl",
+                    "right": {
+                        "id": 10,
+                        "name": "Kai"
+                    }
+                }
+            }
+        }
+
+        // 假设id和name均不会重复，根据输入name找到对应的id
+        function findIdByName(name) {
+            function getListWithDLR(root){
+                if( root != null){
+                    if( root.name === name)console.log("对应id: " + root.id);
+                    getListWithDLR(root.left);
+                    getListWithDLR(root.right);
+                };
+            }
+            getListWithDLR(tree);
+        }
+
+        btn1.onclick = function(){
+            var name2id = document.querySelector("#name2id").value;
+            findIdByName(name2id);
+        };
+
+        // 假设id和name均不会重复，根据输入id找到对应的name
+        function findNameById(id) {
+            function getListWithDLR(root){
+                if( root != null){
+                    if( root.id === id)console.log("对应name: " + root.name);
+                    getListWithDLR(root.left);
+                    getListWithDLR(root.right);
+                };
+            }
+            getListWithDLR(tree);
+        }
+
+        btn2.onclick = function(){
+            var id2name = Number(document.querySelector("#id2name").value);
+            findNameById(id2name);
+        }
+
+        // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
+        console.log("前序遍历");
+        function getListWithDLR(root) {
+            if( root != null){
+                console.log(root.name);
+                getListWithDLR(root.left);
+                getListWithDLR(root.right);
+            };
+        }
+
+        getListWithDLR(tree);
+
+        // 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
+        function getListWithLDR(root) {
+            if( root != null){
+                getListWithLDR(root.left);
+                console.log(root.name);
+                getListWithLDR(root.right);
+            };
+        }
+        console.log("中序遍历");
+        getListWithLDR(tree);
+        // 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
+        function getListWithLRD(root) {
+            if( root != null){
+                getListWithLRD(root.left);
+                getListWithLRD(root.right);
+                console.log(root.name);
+            };
+        }
+        console.log("后序遍历");
+        getListWithLRD(tree);
+    </script>
+</body>
+</html>
