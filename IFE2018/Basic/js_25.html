@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <select id="year-select">
+
+    </select>
+
+    <select id="month-select">
+
+    </select>
+
+    <select id="day-select">
+
+    </select>
+
+    <select id="hour-select">
+
+    </select>
+
+    <select id="minite-select">
+
+    </select>
+
+    <select id="second-select">
+
+    </select>
+
+    <p id="result-wrapper">现在距离 <span id="tar-y">2001</span>年<span id="tar-m">1</span>月<span id="tar-d">1</span>日星期<span id="tar-w">1</span> <span id="tar-h">1</span>:<span id="tar-min">1</span>:<span id="tar-s">1</span> 还有 <span id="res-d">1</span> 天 <span id="res-h">1</span> 小时 <span id="res-min">1</span> 分 <span id="res-s">1</span> 秒</p>
+    <script>
+        var yearSelect = document.getElementById("year-select"),
+            monthSelect = document.getElementById("month-select"),
+            daySelect = document.getElementById("day-select"),
+            hourSelect = document.getElementById("hour-select"),
+            miniteSelect = document.getElementById("minite-select"),
+            secondSelect = document.getElementById("second-select"),
+            resultWrapper = document.getElementById("result-wrapper"),
+            yearSpan = 30,
+            tarDate = null;
+
+        function init(parent,len,base){
+            parent.innerHTML = "";
+            for(var i = 0;i < len;i++){
+                var option = document.createElement('option');
+                option.value = i + base;
+                option.innerHTML = i + base;
+                parent.appendChild(option);
+            }
+        };
+
+        (function(){
+            init(yearSelect,yearSpan,2000);
+            init(monthSelect,12,1);
+            init(hourSelect,24,0);
+            init(miniteSelect,60,0);
+            init(secondSelect,60,0);
+            for(var i = 0,select = document.querySelectorAll("select"),len = select.length;i < len; i++){
+                select[i].addEventListener("change", function(){
+                    clearInterval(timer);
+                    update();
+                })
+            }
+        })()
+
+        function update(){
+            var renew_date = new Date(yearSelect.value,monthSelect.value,daySelect.value,hourSelect.value,miniteSelect.value,secondSelect.value),
+                targetTimeStamp = Date.parse(renew_date),
+                current_date = new Date(),
+                currentTimeStamp = Date.parse(current_date);
+            var renew_getday = renew_date.getDay(),
+                week = ["日","一","二","三","四","五","六"];
+            var linkStr = "";
+            linkStr = targetTimeStamp > currentTimeStamp?"还有":"已经过去";
+            tarDate = yearSelect.value + '年' + monthSelect.value + '月' + daySelect.value + '日 星期' + week[renew_getday] + hourSelect.value + ':' + miniteSelect.value + ':' + secondSelect.value;
+            resultWrapper.innerHTML = "现在距离" + tarDate + linkStr;
+        }
+
+        var timer = setInterval(function(){
+            var init_date = new Date();
+            yearSelect.value = init_date.getFullYear();
+            monthSelect.value = init_date.getMonth() + 1;
+            hourSelect.value = init_date.getHours();
+            miniteSelect.value = init_date.getMinutes();
+            secondSelect.value = init_date.getSeconds();
+            init_date.setMonth(init_date.getMonth() + 1);
+            var init_day = init_date.getDate();
+            init_date.setDate(0);
+            init(daySelect,init_date.getDate(),1);
+            daySelect.value = init_day;
+        },1000);
+
+        monthSelect.onchange = function(){
+            var lg = [1,3,5,7,8,10,12],
+                sml = [4,6,9,11],
+                len = 0,
+                cur = Number(monthSelect.value);
+            if(lg.indexOf(cur) > -1){
+                len = 31;
+            }else if(sml.indexOf(cur) > -1){
+                len = 30;
+            }else {
+                var cur_y = yearSelect.value;
+                if((cur_y % 4 === 0 && cur_y % 100 !== 0) || cur_y % 400 === 0){
+                    len = 29;
+                }else{
+                    len = 28;
+                }
+            }
+            init(daySelect,len,1);
+            update();
+        }
+
+        yearSelect.onchange = function(){
+            if(Number(monthSelect.value) === 2){
+                var cur_y = yearSelect.value;
+                if((cur_y % 4 === 0 && cur_y % 100 !== 0) || cur_y % 400 === 0){
+                    len = 29;
+                }else{
+                    len = 28;
+                }
+                init(daySelect,len,1);
+            }
+            update();
+        }
+    </script>
+</body>
+</html>
