@@ -29,7 +29,7 @@
 
     </select>
 
-    <p id="result-wrapper">现在距离 <span id="tar-y">2001</span>年<span id="tar-m">1</span>月<span id="tar-d">1</span>日星期<span id="tar-w">1</span> <span id="tar-h">1</span>:<span id="tar-min">1</span>:<span id="tar-s">1</span> 还有 <span id="res-d">1</span> 天 <span id="res-h">1</span> 小时 <span id="res-min">1</span> 分 <span id="res-s">1</span> 秒</p>
+    <p id="result-wrapper"></p>
     <script>
         var yearSelect = document.getElementById("year-select"),
             monthSelect = document.getElementById("month-select"),
@@ -66,16 +66,24 @@
         })()
 
         function update(){
-            var renew_date = new Date(yearSelect.value,monthSelect.value,daySelect.value,hourSelect.value,miniteSelect.value,secondSelect.value),
+            var renew_date = new Date(yearSelect.value,monthSelect.value - 1,daySelect.value,hourSelect.value,miniteSelect.value,secondSelect.value),
                 targetTimeStamp = Date.parse(renew_date),
                 current_date = new Date(),
-                currentTimeStamp = Date.parse(current_date);
+                currentTimeStamp = Date.parse(current_date),
+                diff = Math.abs(targetTimeStamp - currentTimeStamp),
+                diff_days = Math.floor(diff/(24*3600*1000)),
+                leave_h = diff%(24*3600*1000),
+                diff_h = Math.floor(leave_h/(3600*1000)),
+                leave_m = leave_h %(3600*1000),
+                diff_m = Math.floor(leave_m/(60*1000)),
+                leave_s = leave_m%(60*1000),
+                diff_s = Math.round(leave_s/1000);
             var renew_getday = renew_date.getDay(),
                 week = ["日","一","二","三","四","五","六"];
             var linkStr = "";
             linkStr = targetTimeStamp > currentTimeStamp?"还有":"已经过去";
-            tarDate = yearSelect.value + '年' + monthSelect.value + '月' + daySelect.value + '日 星期' + week[renew_getday] + hourSelect.value + ':' + miniteSelect.value + ':' + secondSelect.value;
-            resultWrapper.innerHTML = "现在距离" + tarDate + linkStr;
+            tarDate = yearSelect.value + '年' + monthSelect.value  + '月' + daySelect.value + '日 星期' + week[renew_getday] + hourSelect.value + ':' + miniteSelect.value + ':' + secondSelect.value;
+            resultWrapper.innerHTML = "现在距离" + tarDate + linkStr + diff_days + '天' + diff_h +'时'+ diff_m +'分'+ diff_s + '秒';
         }
 
         var timer = setInterval(function(){
