@@ -126,8 +126,6 @@
                         ctx.strokeStyle = this.def.cir.color;
                         ctx.arc(rx[j],this.def.cvs.height - ry[j], this.def.cir.dia/2,0, 2*Math.PI);
                         ctx.stroke();
-                        ctx.closePath();
-                        ctx.beginPath();
                         ctx.rect(rx[j] - this.def.bar.width/2, this.def.cvs.height - ry[j], this.def.bar.width, ry[j]-2);
                         ctx.fillStyle = this.def.bar.bgColor;
                         ctx.strokeStyle = "#fff";
