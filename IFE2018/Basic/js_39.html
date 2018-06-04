@@ -159,6 +159,8 @@
                 return allData;
             }
             if(regions == "" || products == ""){
+                tby.innerHTML = "";
+                canvas.height = canvas.height;
                 return false;
             }
             render_table(passData());
