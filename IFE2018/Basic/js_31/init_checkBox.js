@@ -60,6 +60,8 @@ function init_checkBox(container, vals, checked_count, checked_item){
                     }
                 }
             }
+            var query = "regions=" + checked_items.regions + "&products=" +checked_items.products;
+            history.pushState(checked_items,"",location.href.split("?")[0] + "?" + query);
         }
 
         render_table(getAllData());
