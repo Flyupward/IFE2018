@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+        #table-wrapper table ,#table-wrapper table td,#table-wrapper table th{
+            border:1px solid #444;
+        }
+        #table-wrapper table td,#table-wrapper table th {
+            padding:5px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        #table-wrapper table thead th{
+            background-color:#444;
+            color:#fff;
+        }
+        #table-wrapper table{
+            text-align: center;
+            margin-top:20px;
+        }
+        #table-wrapper table tbody tr:hover{
+            cursor: pointer;
+        }
+
+        #table-wrapper {
+            float:left;
+        }
+        #chart-wrapper {
+            float: left;
+        }
+        .edit-icon {
+            background:url('images/edit-icon.png')no-repeat right center;
+        }
+        #confirm, #cancel {
+            padding:10px;
+            margin:0 5px;
+            width:auto;
+            height:5px;
+            line-height:5px;
+            display: inline-block;
+            background-color:#444;
+            border-radius:2px;
+            color:#fff;
+            font-family:"黑体";
+            font-size:14px;
+        }
+
+        #confirm:hover {
+            background-color:#50b7c1;
+        }
+
+        #cancel:hover {
+            background-color:#c00;
+        }
+        #submit {
+            background-color:#09e;
+            width:200px;
+            height:30px;
+            color:#fff;
+            line-height:30px;
+            font-family:"黑体";
+            font-size:16px;
+            border-radius:10px;
+            cursor: pointer;
+            border:none;
+            display: block;
+            margin-top:10px;
+        }
+
+        #submit:hover {
+            opacity:0.8;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="region-radio-wrapper">
+        </div>
+        <div id="product-radio-wrapper">
+        </div>
+    </div>
+
+    <button type="button" id="submit">保存数据</button>
+    <div id="table-wrapper">
+        <table  cellspacing="0" cellpadding="0">
+            <thead>
+                <tr id="th-wrapper">
+                    <!-- <th></th>输出表头：商品、地区、1月、2月、…… 12月 -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td>data</td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <div id="chart-wrapper">
+        <div id="line-wrapper">
+            <p><span id="region-text" style="margin-right:10px;"></span><span id="product-text"></span></p>
+            <canvas id="canvas">
+
+            </canvas>
+        </div>
+    </div>
+    <script src="js_31/var.js"></script>
+    <script id="db" src="js_31/ife31data.js"></script>
+    <script src="js_31/getData.js"></script>
+    <script src="js_31/render_table.js"></script>
+    <script src="js_31/init_checkBox.js"></script>
+    <script src="js_34/showAll.js"></script>
+    <script src="js_34/js_34_main.js"></script>
+    <script src="js_37_main.js"></script>
+    <script>
+        var fnHashTrigger = function(){
+            for(var m = 0;m < wrapper.getElementsByTagName("input").length;m++){
+                wrapper.getElementsByTagName("input")[m].removeAttribute("disabled");
+            }
+            var regions = getParameterByName("regions").split(","),
+                products = getParameterByName("products").split(",");
+            for(var i = 0;i < region_radio_wrapper.children.length;i++){
+                if(regions.indexOf(region_radio_wrapper.children[i].value) > -1){
+                    region_radio_wrapper.children[i].checked = true;
+                    if(regions.length === 1){
+                        region_radio_wrapper.children[i].disabled = "disabled";
+                    }
+                }else {
+                    region_radio_wrapper.children[i].checked = false;
+                }
+            }
+
+            for(var j = 0;j < product_radio_wrapper.children.length;j++){
+                if(products.indexOf(product_radio_wrapper.children[j].value) > -1){
+                    product_radio_wrapper.children[j].checked = true;
+                    if(products.length === 1){
+                        product_radio_wrapper.children[j].disabled = "disabled";
+                    }
+                }else {
+                    product_radio_wrapper.children[j].checked = false;
+                }
+            }
+
+            if(regions.length === region_radio_wrapper.children.length - 1){
+                region_radio_wrapper.children[0].checked = true;
+            }
+            if(products.length === product_radio_wrapper.children.length - 1){
+                product_radio_wrapper.children[0].checked = true;
+            }
+
+            function passData(){
+                var allData = [];
+                for(var a = 0;a < products.length;a++){
+                    for(var b = 0;b < regions.length;b++){
+                        allData.push(getData(regions[b],products[a]));
+                    }
+                }
+                return allData;
+            }
+            if(regions == "" || products == ""){
+                return false;
+            }
+            render_table(passData());
+            showAll();
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results == null ? "": decodeURIComponent(results[1]);
+        }
+
+        if(history.pushState){
+            window.addEventListener("popstate", function(){
+                fnHashTrigger();
+            })
+
+            fnHashTrigger();
+        }
+    </script>
+</body>
+</html>
