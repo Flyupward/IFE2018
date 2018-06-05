@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 餐厅类
+    // 属性：金钱，座位数量、职员列表
+    // 方法：招聘职员，解雇职员
+        var Restaurant = function(obj){
+            this.cash =  obj.cash;
+            this.seats =  obj.seats;
+            this.staff  = obj.staff;
+            this.staff_count = 0;
+        };
+        Restaurant.prototype.hire = function(worker){
+            this.staff.push(worker);
+            this.staff_count ++;
+            worker.prototype.id = this.staff_count;
+        }
+        Restaurant.prototype.fire = function(worker){
+            var idx = this.staff.indexOf(worker);
+            this.staff.splice(idx, 1);
+        }
+
+        // 职员类
+        // 属性：ID，姓名，工资
+        // 方法：完成一次工作
+        var Staff = function(name, salary){
+            this.id = null;
+            this.name = name;
+            this.salary = salary;
+            this.status = true;
+        }
+
+        // 服务员类，继承自职员
+        // 完成一次工作：如果参数是个数组，则记录客人点菜，如果参数不是数组则是上菜行为
+        var Server = function(staff){
+            var that = this;
+            this.prototype = staff;
+            this.customer = null;
+            this.work = function(order, customer){
+                if(order instanceof Array){
+                    that.customer = customer;
+                    var order_item = [];
+                    for(var i = 0;i < order.length;i++){
+                        order_item.push(order[i].name);
+                    }
+                    console.log("服务员"+ this.prototype.name +"让后厨准备：" + order_item);
+                }else{
+                    console.log("给"+ that.customer.name +"上菜");
+                    that.customer = null;
+                }
+            };
+            this.appoint = function(){
+                while(true){
+                    var rd_cook = ifeRestaurant.staff[Math.round(Math.random()*ifeRestaurant.staff.length)];
+                    if(rd_cook instanceof Cook && rd_cook.prototype.status === true){
+                        console.log(rd_cook.prototype.name + "为您做菜");
+                        rd_cook.prototype.status = false;
+                        rd_cook.cooking(that, this.customer);
+                        return rd_cook.status;
+                        break;
+                    }
+                }
+            };
+
+        }
+        // 厨师类，继承自职员
+        // 完成一次工作：烹饪出菜品
+        var Cook = function(staff){
+            var that = this;
+            this.prototype = staff;
+            this.cooking = function(server, customer){
+                setTimeout(function(){
+                    console.log("大厨" + that.prototype.name + "菜好了");
+                    that.prototype.status = true;
+                    server.work(null);
+                    customer.eat();
+                },1000)
+            }
+        }
+
+        // 顾客类
+        // 方法：点菜，吃
+        var Customer = function(restaurant, name){
+            var that = this;
+            this.name = name;
+            this.order = function(order){
+                while(true){
+                    var rd_server = restaurant.staff[Math.round(Math.random()*restaurant.staff.length)];
+                    if(rd_server instanceof Server){
+                        console.log(rd_server.prototype.name + "为您服务");
+                        rd_server.work(order, that);
+                        rd_server.appoint();
+                        break;
+                    }
+                };
+                that.pay(order);
+            };
+            restaurant.seats -= 1;
+            this.eat = function(){
+                console.log("eating...");
+                setTimeout(function(){
+                    console.log("done!!!");
+                    restaurant.seats += 1;
+                },3000);
+            }
+            this.pay = function(order){
+                for(var i = 0;i < order.length;i++){
+                    restaurant.cash += order[i].price - order[i].cost;
+                }
+            }
+        }
+
+        // 菜品类
+        // 属性：名字、烹饪成本、价格
+        var Dishes = function(name, cost, price){
+            this.name = name;
+            this.cost = cost;
+            this.price = price;
+        }
+
+        var ifeRestaurant = new Restaurant({
+            cash: 1000000,
+            seats: 20,
+            staff: []
+        });
+
+        var server1 = new Server(new Staff( "小王", 5000)),
+            server2 = new Server(new Staff( "小李", 4000)),
+            server3 = new Server(new Staff( "小张", 3000)),
+            server4 = new Server(new Staff( "小刘", 2000)),
+            server5 = new Server(new Staff( "小明", 1000));
+            cook1 = new Cook(new Staff( "老宇", 8000)),
+            cook2 = new Cook(new Staff( "老红", 7000)),
+            cook3 = new Cook(new Staff( "老超", 6000));
+            ifeRestaurant.hire(server1);
+            ifeRestaurant.hire(server2);
+            ifeRestaurant.hire(server3);
+            ifeRestaurant.hire(server4);
+            ifeRestaurant.hire(server5);
+            ifeRestaurant.fire(server2);
+            ifeRestaurant.hire(server2);
+            ifeRestaurant.hire(cook1);
+            ifeRestaurant.hire(cook2);
+            ifeRestaurant.hire(cook3);
+
+
+        var cus1 = new Customer(ifeRestaurant,"顾客A");
+        cus1.order([new Dishes("牛肉",100,200),new Dishes("猪肉",50,120),new Dishes("鸡肉",30,90)]);
+    </script>
+</body>
+</html>
