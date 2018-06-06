@@ -10,9 +10,9 @@
     // 属性：金钱，座位数量、职员列表
     // 方法：招聘职员，解雇职员
         var Restaurant = function(obj){
-            this.cash =  obj.cash;
-            this.seats =  obj.seats;
-            this.staff  = obj.staff;
+            this.cash =  obj.cash || 0;
+            this.seats =  obj.seats || 0;
+            this.staff  = obj.staff || [];
             this.staff_count = 0;
         };
         Restaurant.prototype.hire = function(worker){
