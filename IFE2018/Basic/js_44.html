@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 餐厅类
+    // 属性：金钱，座位数量、职员列表
+    // 方法：招聘职员，解雇职员
+        var Restaurant = function(obj){
+            this.cash =  obj.cash || 0;
+            this.seats =  obj.seats || 0;
+            this.staff  = obj.staff || [];
+            this.server = null;
+            this.cook = null;
+            this.status = true;
+        };
+        Restaurant.prototype.hire = function(worker){
+            if(worker instanceof Server){
+                this.server = worker;
+            }else if(worker instanceof Cook){
+                this.cook = worker;
+            }
+            worker.prototype.workplace = this;
+            this.cash -= worker.prototype.salary;
+        }
+        Restaurant.prototype.fire = function(worker){
+            if(worker instanceof Server){
+                this.server = null;
+            }else if(worker instanceof Cook){
+                this.cook = null;
+            }
+            worker.prototype.workplace = null;
+        }
+
+        // 职员类
+        // 属性：ID，姓名，工资
+        // 方法：完成一次工作
+        var Staff = function(name, salary){
+            this.name = name;
+            this.salary = salary;
+            this.workplace = null;
+        }
+
+        // 服务员类，继承自职员
+        // 完成一次工作：如果参数是个数组，则记录客人点菜，如果参数不是数组则是上菜行为
+        var Server = function(staff){
+            this.imform = function(order){
+                console.log("后厨请准备" + order.name);
+                this.prototype.workplace.cook.cooking(order);
+                this.prototype.workplace.cash += order.price - order.cost;
+            }
+            this.pass = function(){
+                console.log("传菜给顾客");
+                customers[0].eating();
+            }
+        };
+
+        var ProxySingletonServer = (function(){
+            var server;
+            return function(staff){
+                if(!server){
+                    server = new Server(staff);
+                    server.prototype = staff;
+                }
+                return server;
+            }
+        })();
+
+        // 厨师类，继承自职员
+        // 完成一次工作：烹饪出菜品
+        var Cook = function(staff){
+            var that = this;
+            this.cooking = function(order){
+                console.log("烹饪"+ order.name +"中，请稍后");
+                setTimeout(function(){
+                    console.log("准备好了，服务员请帮忙上菜");
+                    that.prototype.workplace.server.pass();
+                }, 3000);
+            }
+        }
+
+        var ProxySingletonCook = (function(){
+            var cook;
+            return function(staff){
+                if(!cook){
+                    cook = new Cook(staff);
+                    cook.prototype = staff;
+                }
+                return cook;
+            }
+        })();
+
+        // 顾客类
+        // 方法：点菜，吃
+        var Customer = function(restaurant){
+            customers.push(this);
+            this.order = function(){
+                var dish = dishes[Math.round(Math.random()*dishes.length)];
+                if(dish){
+                    restaurant.status = false;
+                    restaurant.seats --;
+                    restaurant.server.imform(dish);
+                }
+            }
+            this.eating = function(){
+                console.log("eating");
+                setTimeout(function(){
+                    console.log("done");
+                    customers.shift();
+                    restaurant.seats++;
+                    restaurant.status = true;
+                }, 3000)
+            }
+        }
+
+        // 菜品类
+        // 属性：名字、烹饪成本、价格
+        var Dishes = function(name, cost, price){
+            this.name = name;
+            this.cost = cost;
+            this.price = price;
+        }
+
+        var ifeRestaurant = new Restaurant({
+            cash: 1000000,
+            seats: 20,
+            staff: []
+        });
+
+        var singleServer = new ProxySingletonServer(new Staff("single-server",5000)),
+            singleCook = new ProxySingletonCook(new Staff("single-cook",8000)),
+            customers = [],
+            dishes = [new Dishes("烧烤",100,200),new Dishes("川菜",200,350),new Dishes("湘菜",150,240),new Dishes("火锅",180,270),new Dishes("粤菜",190,260),new Dishes("鲁菜",200,280)];
+        ifeRestaurant.hire(singleServer);
+        ifeRestaurant.hire(singleCook);
+        var cus1 = new Customer(ifeRestaurant),
+            cus2 = new Customer(ifeRestaurant),
+            cus3 = new Customer(ifeRestaurant),
+            cus4 = new Customer(ifeRestaurant),
+            cus5 = new Customer(ifeRestaurant);
+
+        var timer = setInterval(function(){
+            while(customers.length > 0 && ifeRestaurant.status){
+                customers[0].order();
+            }
+            if(customers.length <= 0){
+                clearInterval(timer);
+            }
+        }, 2000)
+
+        // cus1.order();
+
+    </script>
+</body>
+</html>
